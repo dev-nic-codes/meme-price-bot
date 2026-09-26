@@ -45,6 +45,15 @@ Create `.env` from `.env.example`, then run:
 python -m src.telegram_bot
 ```
 
+## Old bot redirect
+
+`src.redirect_bot` keeps the previous bot account online only as a migration
+notice. Private messages, explicit old-bot mentions, old callbacks, and inline
+queries receive a link to `@memesbot`; ordinary group and channel traffic is
+ignored. Production runs it separately through
+`meme-price-bot-redirect.service`, with the old token stored only in its
+restricted server environment file.
+
 ## Inline mode
 
 Enable inline mode for `@memesbot` with BotFather's `/setinline` command.

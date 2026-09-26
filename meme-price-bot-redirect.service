@@ -1,0 +1,18 @@
+[Unit]
+Description=Meme Price Bot migration redirect
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/srv/projects/meme-price-bot
+EnvironmentFile=/etc/meme-price-bot-redirect.env
+ExecStart=/srv/projects/meme-price-bot/.venv/bin/python -m src.redirect_bot
+Restart=always
+RestartSec=10
+Environment=PYTHONUNBUFFERED=1
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
