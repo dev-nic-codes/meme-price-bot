@@ -220,7 +220,7 @@ class PulseMarketService:
             async with session.get(
                 url,
                 params=params,
-                headers={"Accept": "application/json", "User-Agent": "memepricesbot-pulse/2.0"},
+                headers={"Accept": "application/json", "User-Agent": "memesbot-pulse/2.0"},
                 timeout=timeout,
             ) as response:
                 if response.status not in {429, 502, 503, 504}:

@@ -47,16 +47,16 @@ python -m src.telegram_bot
 
 ## Inline mode
 
-Enable inline mode for `@memepricesbot` with BotFather's `/setinline` command.
+Enable inline mode for `@memesbot` with BotFather's `/setinline` command.
 Once enabled:
 
 ```text
-@memepricesbot
-@memepricesbot utya
-@memepricesbot 100 gram to utya
-@memepricesbot 1000 utya to redo
-@memepricesbot 100 usd to groyp
-@memepricesbot 100 groyp to usd
+@memesbot
+@memesbot utya
+@memesbot 100 gram to utya
+@memesbot 1000 utya to redo
+@memesbot 100 usd to groyp
+@memesbot 100 groyp to usd
 ```
 
 An empty query returns GRAM first, followed by UTYA, REDO, SCAT, YODA, CHERRY,

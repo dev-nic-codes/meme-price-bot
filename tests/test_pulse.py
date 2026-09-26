@@ -513,7 +513,7 @@ class PulseTelegramTests(unittest.IsolatedAsyncioTestCase):
             {
                 "from": {"id": 123},
                 "chat": {"id": -1001, "type": "supergroup"},
-                "text": "/pulse@memepricesbot",
+                "text": "/pulse@memesbot",
             }
         )
 

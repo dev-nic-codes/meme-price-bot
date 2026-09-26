@@ -858,7 +858,7 @@ class NewTokensService:
 
     @staticmethod
     def _headers(url: str = "") -> dict[str, str]:
-        headers = {"Accept": "application/json", "User-Agent": "memepricesbot/1.0"}
+        headers = {"Accept": "application/json", "User-Agent": "memesbot/1.0"}
         if "api.github.com" in url or "raw.githubusercontent.com" in url:
             headers["X-GitHub-Api-Version"] = "2022-11-28"
             github_token = os.getenv("GITHUB_TOKEN", "").strip()

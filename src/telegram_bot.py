@@ -199,9 +199,9 @@ class TelegramDashboardBot:
         "• <code>/new</code> — TON tokens newly verified during the last 7 days\n"
         "• <code>/alert</code> — manage private token alerts\n"
         "\n🪄 <b>Inline mode</b>\n"
-        "• <code>@memepricesbot</code> — view and share all supported prices in any chat\n"
-        "• <code>@memepricesbot SCAT</code> — find one coin and share its statistics\n"
-        "• <code>@memepricesbot 100 USD to GRAM</code> — convert between USD, GRAM, and supported tokens\n\n"
+        "• <code>@memesbot</code> — view and share all supported prices in any chat\n"
+        "• <code>@memesbot SCAT</code> — find one coin and share its statistics\n"
+        "• <code>@memesbot 100 USD to GRAM</code> — convert between USD, GRAM, and supported tokens\n\n"
         "• <code>/help</code> — show this guide"
     )
     DEFAULT_PRIVATE_HELP_MESSAGE = (
@@ -217,15 +217,15 @@ class TelegramDashboardBot:
         "• <code>/new</code> — TON tokens newly verified during the last 7 days\n"
         "• <code>/alert</code> — manage private token alerts\n"
         "\n🪄 <b>Inline mode</b>\n"
-        "• <code>@memepricesbot</code> — view and share all supported prices in any chat\n"
-        "• <code>@memepricesbot SCAT</code> — find one coin and share its statistics\n"
-        "• <code>@memepricesbot 100 USD to GRAM</code> — convert between USD, GRAM, and supported tokens\n\n"
+        "• <code>@memesbot</code> — view and share all supported prices in any chat\n"
+        "• <code>@memesbot SCAT</code> — find one coin and share its statistics\n"
+        "• <code>@memesbot 100 USD to GRAM</code> — convert between USD, GRAM, and supported tokens\n\n"
         "• <code>/guide</code> — beginner's TON meme coin guide\n"
         "• <code>/help</code> — show this command list"
     )
     DEFAULT_GUIDE_PRIVATE_ONLY_MESSAGE = (
         "🏳️ <b>TON Meme Coin Guide</b>\n\n"
-        "This guide works only in private messages. Open @memepricesbot privately to continue."
+        "This guide works only in private messages. Open @memesbot privately to continue."
     )
     DEFAULT_GUIDE_HOME_MESSAGE = (
         "🏳️ <b>TON Meme Coin Guide</b>\n\n"
@@ -244,7 +244,7 @@ class TelegramDashboardBot:
         "4. Verify its correct contract address.\n"
         "5. Research its market data and community.\n"
         "6. Start with a small amount.\n"
-        "7. Track the token through @memepricesbot.\n\n"
+        "7. Track the token through @memesbot.\n\n"
         "Meme coins are highly speculative. Never invest money you cannot afford to lose."
     )
     DEFAULT_GUIDE_RESEARCH_MESSAGE = (
@@ -286,7 +286,7 @@ class TelegramDashboardBot:
         "• Start with a small transaction when using an unfamiliar token or service.\n\n"
         "A token can be trending, have high volume, or increase rapidly in price and still be manipulated "
         "or fraudulent.\n\n"
-        "The information provided by @memepricesbot is for informational purposes only. It must not be "
+        "The information provided by @memesbot is for informational purposes only. It must not be "
         "presented as financial advice or a safety guarantee."
     )
     DEFAULT_GUIDE_TRADING_MESSAGE = (
@@ -318,7 +318,7 @@ class TelegramDashboardBot:
     )
     DEFAULT_GUIDE_INLINE_MESSAGE = (
         "🪄 <b>Inline Mode</b>\n\n"
-        "Type <code>@memepricesbot</code> in any Telegram chat—even when the bot is not a member—and "
+        "Type <code>@memesbot</code> in any Telegram chat—even when the bot is not a member—and "
         "choose a result to insert it into the conversation.\n\n"
         "<b>Available features</b>\n"
         "• Leave the query empty to view GRAM, UTYA, REDO, SCAT, YODA, CHERRY, BCHERRY, MTONGA, GROYP, "
@@ -328,10 +328,10 @@ class TelegramDashboardBot:
         "• Convert between USD, GRAM, and every supported token in either direction.\n"
         "• Use TON or TONCOIN as aliases for GRAM.\n\n"
         "<b>Examples</b>\n"
-        "<code>@memepricesbot SCAT</code>\n"
-        "<code>@memepricesbot 100 USD to GRAM</code>\n"
-        "<code>@memepricesbot 1000 GRM to UTYA</code>\n"
-        "<code>@memepricesbot 250 TON to YODA</code>\n\n"
+        "<code>@memesbot SCAT</code>\n"
+        "<code>@memesbot 100 USD to GRAM</code>\n"
+        "<code>@memesbot 1000 GRM to UTYA</code>\n"
+        "<code>@memesbot 250 TON to YODA</code>\n\n"
         "Inline conversions display current market calculations; they do not execute a trade."
     )
     DEFAULT_GUIDE_COMMANDS_MESSAGE = (
@@ -357,7 +357,7 @@ class TelegramDashboardBot:
         "movements across tracked TON meme coins.\n\n"
         "<code>/new</code>\n\n"
         "View TON tokens newly added to Tonkeeper's reviewed asset list during the last 7 days.\n\n"
-        "<code>@memepricesbot</code>\n\n"
+        "<code>@memesbot</code>\n\n"
         "Open inline mode in any chat to share supported coin statistics or convert between USD, GRAM, "
         "and supported tokens. Add a ticker, token name, or conversion after the bot username.\n\n"
         "Market information comes from external data providers. When information is unavailable, the bot "
@@ -699,7 +699,7 @@ class TelegramDashboardBot:
     )
     DEFAULT_PRIVATE_ALERTS_MESSAGE = (
         "🔔 <b>Private alerts</b>\n\n"
-        "Open a private chat with @memepricesbot and send /alert."
+        "Open a private chat with @memesbot and send /alert."
     )
     DEFAULT_ALERT_TOKEN_SEARCH_UNAVAILABLE_MESSAGE = (
         "⚠️ Token search is temporarily unavailable. Try again shortly."
@@ -2858,7 +2858,7 @@ class TelegramDashboardBot:
                     [
                         self.public_button(
                             "guide_private_open",
-                            url="https://t.me/memepricesbot?start=guide",
+                            url="https://t.me/memesbot?start=guide",
                         )
                     ]
                 ]
@@ -6685,7 +6685,7 @@ class TelegramDashboardBot:
     def inline_message_settings_text() -> str:
         return (
             "🪄 <b>Inline-Mode Messages</b>\n\n"
-            "Edit every message users can insert into any chat from @memepricesbot: coin statistics, "
+            "Edit every message users can insert into any chat from @memesbot: coin statistics, "
             "conversion results, and help or error guidance.\n\n"
             "Live-value placeholders are validated before saving. Telegram formatting and custom emojis are preserved."
         )

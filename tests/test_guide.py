@@ -57,7 +57,7 @@ class GuideCommandTests(unittest.IsolatedAsyncioTestCase):
         markup = json.loads(kwargs["reply_markup"])
         self.assertEqual(
             markup["inline_keyboard"][0][0]["url"],
-            "https://t.me/memepricesbot?start=guide",
+            "https://t.me/memesbot?start=guide",
         )
 
     async def test_private_start_deep_link_opens_guide(self) -> None:
@@ -90,7 +90,7 @@ class GuideCommandTests(unittest.IsolatedAsyncioTestCase):
         self.assertNotIn("/guide", group_help)
         for help_text in (private_help, group_help):
             self.assertIn("Inline mode", help_text)
-            self.assertIn("@memepricesbot", help_text)
+            self.assertIn("@memesbot", help_text)
             self.assertIn("100 USD to GRAM", help_text)
 
     @staticmethod

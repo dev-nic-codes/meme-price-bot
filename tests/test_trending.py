@@ -161,7 +161,7 @@ class TrendingCommandTests(unittest.IsolatedAsyncioTestCase):
             {
                 "from": {"id": 12345},
                 "chat": {"id": -100999, "type": "supergroup"},
-                "text": "/trending@memepricesbot",
+                "text": "/trending@memesbot",
             }
         )
 

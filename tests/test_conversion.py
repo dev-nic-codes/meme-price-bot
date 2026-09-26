@@ -104,7 +104,7 @@ class ConversionCommandTests(unittest.IsolatedAsyncioTestCase):
             {
                 "from": {"id": 12345},
                 "chat": {"id": -100999, "type": "supergroup"},
-                "text": "/swap@memepricesbot utya 100",
+                "text": "/swap@memesbot utya 100",
             }
         )
 
@@ -123,7 +123,7 @@ class ConversionCommandTests(unittest.IsolatedAsyncioTestCase):
             {
                 "from": {"id": 12345},
                 "chat": {"id": -100999, "type": "supergroup"},
-                "text": "/convert@memepricesbot utya 100",
+                "text": "/convert@memesbot utya 100",
             }
         )
 

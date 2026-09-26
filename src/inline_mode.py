@@ -129,7 +129,7 @@ DEFAULT_INLINE_COIN_MESSAGE = (
     "🏆 ATH: <b>[ATH_PRICE]</b>\n"
     "👥 Holders: <b>[HOLDERS]</b>\n"
     "💰 Market cap: <b>[MARKET_CAP]</b>\n\n"
-    "<i>Live market snapshot via @memepricesbot</i>"
+    "<i>Live market snapshot via @memesbot</i>"
 )
 DEFAULT_INLINE_CONVERSION_MESSAGE = (
     "🔄 <b>Conversion</b>\n\n"
@@ -138,13 +138,13 @@ DEFAULT_INLINE_CONVERSION_MESSAGE = (
 )
 DEFAULT_INLINE_HELP_MESSAGE = (
     "💎 <b>Meme Prices inline mode</b>\n\n"
-    "Type <code>@memepricesbot</code> to view GRAM, UTYA, REDO, SCAT, YODA, "
+    "Type <code>@memesbot</code> to view GRAM, UTYA, REDO, SCAT, YODA, "
     "CHERRY, BCHERRY, MTONGA, GROYP, GRAMMING, and GRM.\n\n"
     "Conversion examples:\n"
-    "• <code>@memepricesbot 100 TON to UTYA</code>\n"
-    "• <code>@memepricesbot 1000 UTYA to REDO</code>\n"
-    "• <code>@memepricesbot 50 USD to GRAM</code>\n"
-    "• <code>@memepricesbot 50 GROYP to USD</code>\n\n"
+    "• <code>@memesbot 100 TON to UTYA</code>\n"
+    "• <code>@memesbot 1000 UTYA to REDO</code>\n"
+    "• <code>@memesbot 50 USD to GRAM</code>\n"
+    "• <code>@memesbot 50 GROYP to USD</code>\n\n"
     "ℹ️ [NOTE]"
 )
 

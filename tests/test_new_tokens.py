@@ -609,7 +609,7 @@ class NewTokenCommandTests(unittest.IsolatedAsyncioTestCase):
             {
                 "from": {"id": 12345},
                 "chat": {"id": -100999, "type": "supergroup"},
-                "text": "/new@memepricesbot",
+                "text": "/new@memesbot",
             }
         )
 
@@ -628,7 +628,7 @@ class NewTokenCommandTests(unittest.IsolatedAsyncioTestCase):
             {
                 "from": {"id": 12345},
                 "chat": {"id": -100999, "type": "supergroup"},
-                "text": "/new@memepricesbot 24h",
+                "text": "/new@memesbot 24h",
             }
         )
 
