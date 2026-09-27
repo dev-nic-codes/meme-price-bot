@@ -73,6 +73,10 @@ class PriceService:
         self.timeout = aiohttp.ClientTimeout(total=timeout_seconds)
         self.headers = {"User-Agent": "meme-price-dashboard/1.0"}
         self.price_bot_root = Path(os.getenv("PRICE_BOT_ROOT", "/srv/projects"))
+        self.price_bot_cache_max_age_seconds = max(
+            60,
+            int(os.getenv("PRICE_BOT_CACHE_MAX_AGE_SECONDS", "900")),
+        )
         self.external_refresh_seconds = max(60, int(os.getenv("EXTERNAL_PRICE_REFRESH_SECONDS", "300")))
         self.last_external_attempt = 0.0
         self.coingecko_min_backoff_seconds = max(
@@ -98,8 +102,9 @@ class PriceService:
 
     async def fetch_prices(self) -> list[CoinValue]:
         cached_values = self._load_cache()
+        primary_pool_values = self._load_price_bot_caches(cached_values)
         values: dict[str, CoinValue] = dict(cached_values)
-        values.update(self._load_price_bot_caches(cached_values))
+        values.update(primary_pool_values)
 
         now = time.monotonic()
         has_all_display_prices = all(
@@ -146,6 +151,12 @@ class PriceService:
             if geckoterminal_attempted and not geckoterminal_failed:
                 self.geckoterminal_backoff_until = 0.0
                 self.geckoterminal_next_backoff_seconds = self.geckoterminal_min_backoff_seconds
+
+        # Price-channel bots track a deliberately configured primary pool. Keep
+        # that pool authoritative for price/change while external providers
+        # enrich market cap and ATH or act as fallback when its cache is stale.
+        for ticker, primary in primary_pool_values.items():
+            values[ticker] = self._prefer_primary_pool(values.get(ticker), primary)
 
         for ticker in DISPLAY_TICKERS:
             current = values.get(ticker)
@@ -235,6 +246,9 @@ class PriceService:
         for ticker, dirname in PRICE_BOT_CACHE_DIRS.items():
             cache_path = self.price_bot_root / dirname / "price_cache.json"
             try:
+                cache_age = max(0.0, time.time() - cache_path.stat().st_mtime)
+                if cache_age > self.price_bot_cache_max_age_seconds:
+                    continue
                 payload = json.loads(cache_path.read_text(encoding="utf-8-sig"))
             except Exception:
                 continue
@@ -359,6 +373,20 @@ class PriceService:
         if previous is None or current.ath_price is not None:
             return current
         return replace(current, ath_price=previous.ath_price)
+
+    @staticmethod
+    def _prefer_primary_pool(external: CoinValue | None, primary: CoinValue) -> CoinValue:
+        if external is None:
+            return primary
+        return replace(
+            external,
+            price=primary.price if primary.price is not None else external.price,
+            change_24h=(
+                primary.change_24h
+                if primary.change_24h is not None
+                else external.change_24h
+            ),
+        )
 
     @staticmethod
     def _float_or_none(value: Any) -> float | None:

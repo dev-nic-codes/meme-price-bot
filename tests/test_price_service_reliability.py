@@ -1,7 +1,11 @@
 from __future__ import annotations
 
+import json
+import os
+import tempfile
 import time
 import unittest
+from pathlib import Path
 from unittest.mock import AsyncMock, patch
 
 import aiohttp
@@ -51,6 +55,72 @@ class PriceServiceReliabilityTests(unittest.IsolatedAsyncioTestCase):
 
         self.assertEqual(merged.price, 2)
         self.assertEqual(merged.ath_price, 5)
+
+    async def test_primary_pool_price_wins_while_external_market_data_is_kept(self) -> None:
+        service = PriceService()
+        cached = cached_display_values()
+        cached["UTYA"] = CoinValue("UTYA", price=1, market_cap=100, ath_price=5)
+        primary = CoinValue("UTYA", price=2, change_24h=3, market_cap=100, ath_price=5)
+        external = CoinValue("UTYA", price=4, change_24h=6, market_cap=700)
+
+        with patch.object(service, "_load_cache", return_value=cached), patch.object(
+            service,
+            "_load_price_bot_caches",
+            return_value={"UTYA": primary},
+        ), patch("src.price_service.GECKO_POOLS", {}), patch.object(
+            service, "_fetch_coingecko_markets", AsyncMock(return_value=[])
+        ), patch.object(
+            service, "_fetch_dex_known_tokens", AsyncMock(return_value=[external])
+        ), patch.object(
+            service, "_save_cache"
+        ):
+            values = await service.fetch_prices()
+
+        utya = next(value for value in values if value.ticker == "UTYA")
+        self.assertEqual(utya.price, 2)
+        self.assertEqual(utya.change_24h, 3)
+        self.assertEqual(utya.market_cap, 700)
+        self.assertEqual(utya.ath_price, 5)
+
+    def test_stale_price_bot_cache_is_ignored(self) -> None:
+        service = PriceService()
+        service.price_bot_cache_max_age_seconds = 120
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            service.price_bot_root = Path(temp_dir)
+            cache_dir = service.price_bot_root / "utya-price-bot"
+            cache_dir.mkdir()
+            cache_path = cache_dir / "price_cache.json"
+            cache_path.write_text(
+                json.dumps({"price_usd": 2, "change_24h_percent": 3}),
+                encoding="utf-8",
+            )
+            stale_time = time.time() - 121
+            os.utime(cache_path, (stale_time, stale_time))
+
+            with patch("src.price_service.PRICE_BOT_CACHE_DIRS", {"UTYA": "utya-price-bot"}):
+                values = service._load_price_bot_caches({})
+
+        self.assertEqual(values, {})
+
+    def test_fresh_price_bot_cache_is_loaded(self) -> None:
+        service = PriceService()
+        service.price_bot_cache_max_age_seconds = 120
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            service.price_bot_root = Path(temp_dir)
+            cache_dir = service.price_bot_root / "utya-price-bot"
+            cache_dir.mkdir()
+            (cache_dir / "price_cache.json").write_text(
+                json.dumps({"price_usd": 2, "change_24h_percent": 3}),
+                encoding="utf-8",
+            )
+
+            with patch("src.price_service.PRICE_BOT_CACHE_DIRS", {"UTYA": "utya-price-bot"}):
+                values = service._load_price_bot_caches({})
+
+        self.assertEqual(values["UTYA"].price, 2)
+        self.assertEqual(values["UTYA"].change_24h, 3)
 
     async def test_coingecko_429_uses_cache_and_enters_backoff(self) -> None:
         service = PriceService()
